@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AarohanTest1</string>
+    <string name="enter_phone">Enter a phone number</string>
+    <string name="make_a_call">Make a call</string>
+    <string name="retry">Retry</string>
+    <string name="enter_message_here">Enter message here</string>
+    <string name="send_a_message">Send a message</string>
+</resources>
