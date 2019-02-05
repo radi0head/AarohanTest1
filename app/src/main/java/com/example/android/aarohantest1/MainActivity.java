@@ -9,6 +9,7 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -34,6 +35,8 @@ import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
     public static final String LOG_TAG=MainActivity.class.getSimpleName();
+    public EditText emailEditText;
+    public EditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         writeExcelButton.setOnClickListener(this);
         View readExcelButton = findViewById(R.id.readExcel);
         readExcelButton.setOnClickListener(this);
+        emailEditText = findViewById(R.id.email_edit_text);
+        passwordEditText = findViewById(R.id.password_edit_text);
     }
     public void onClick(View v) {
         switch (v.getId()) {
@@ -207,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         return success;
     }
 
-    private static void readExcelFile(Context context, String filename) {
+    public void readExcelFile(Context context, String filename) {
         int cellCount=0;
         int rowCount=0;
 
@@ -267,12 +272,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                             date=myCell.toString();
                         break;
                     }
-                    //Log.w("FileUtils", "Cell Value: " +  myCell.toString());
-//                    Toast.makeText(context, "cell Value: " + myCell.toString(), Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(context,"Name: "+name+" Phone Number: "+phoneNumber,Toast.LENGTH_SHORT).show();
-                sendSMS(name,phoneNumber,date,examCenter);
-                //sendEmail(email);
+//                sendSMS(name,phoneNumber,date,examCenter);
+                sendEmail(email);
                 cellCount=0;
             }
         }catch (Exception e){e.printStackTrace(); }
@@ -304,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         smsManager.sendTextMessage(phoneNumber,scAddress,smsMessage,sentIntent,deliveryIntent);
         Log.v(LOG_TAG,"Done "+phoneNumber);
     }
-    public static void sendEmail(final String recipient){
+    public void sendEmail(final String recipient){
         new Thread(new Runnable() {
 
             public void run() {
@@ -313,9 +315,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
                     GMailSender sender = new GMailSender(
 
-                            "f20170713@pilani.bits-pilani.ac.in",
+                            emailEditText.toString(),
 
-                            "shjuaabnn\\0");
+                            passwordEditText.toString());
 
 
 
